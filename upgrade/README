@@ -1,0 +1,22 @@
+### upgrade script for GNU/Gentoo Linux systems ###
+#
+#
+### sync repos
+#
+### get timestamp info
+#
+### read news
+#
+### perform full system upgrade
+#
+#
+### clean up unused dependencies
+#
+#
+### scan for missing deps
+#
+#
+### fix if necessary
+#
+#
+### script improvements pending, pull requests appreciated
