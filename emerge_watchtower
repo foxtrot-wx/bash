@@ -1,0 +1,26 @@
+#!/bin/bash
+
+STR=$( tail -n 1 /var/log/emerge.log )
+SUB="terminating."
+
+tot=0
+com=0
+err="Error:"
+
+if [[ "$STR" != *"$SUB"* ]]; then
+
+    cur=$(genlop -c | grep Currently | awk '{print $3}')
+    tot=$(genlop -c | grep Currently | awk '{print $6}')
+    com=$(($tot - $cur + 1)) >/dev/null 2>&1
+
+    errno=$(genlop -c | grep Error | awk '{print $2}')
+
+    if [[ "$errno" == *"$err"* ]]; then
+        exit 0
+    fi
+
+    echo "emerge: pkg $cur of $tot -> $com remaining"
+
+else
+    echo "no emerge running"
+fi

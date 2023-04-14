@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# privilege check
+if [ "$EUID" -ne 0 ]
+    then echo "run as root"
+    exit
+fi
+
+echo "/*** upgrade starting ***/"
+
+emerge --sync
+
+cat /var/db/repos/gentoo/metadata/timestamp.chk
+
+eselect news read
+
+emerge --update --deep --with-bdeps=y --changed-use --backtrack=300 --changed-deps=y --keep-going=y --verbose-conflicts @world
+
+emerge --depclean
+revdep-rebuild
+
+status=$?
+[ $status -eq 0 ] && echo "/*** upgrade successful ***/" || echo "/*** error encountered ***/"
