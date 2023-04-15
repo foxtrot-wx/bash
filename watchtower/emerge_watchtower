@@ -5,7 +5,7 @@ SUB="terminating."
 
 tot=0
 com=0
-err="Error:"
+err_check="Error:"
 
 if [[ "$STR" != *"$SUB"* ]]; then
 
@@ -13,13 +13,13 @@ if [[ "$STR" != *"$SUB"* ]]; then
     tot=$(genlop -c | grep Currently | awk '{print $6}')
     com=$(($tot - $cur + 1)) >/dev/null 2>&1
 
-    errno=$(genlop -c | grep Error | awk '{print $2}')
+    err=$(genlop -c | grep Error | awk '{print $2}')
 
-    if [[ "$errno" == *"$err"* ]]; then
+    if [[ "$err" == *"$err_check"* ]]; then
         exit 0
     fi
 
-    echo "emerge: pkg $cur of $tot -> $com remaining"
+    echo "emerge: pkg $cur of $tot -> $com remain"
 
 else
     echo "no emerge running"
